@@ -1,0 +1,24 @@
+{
+  "name": "node-standard-errors",
+  "version": "1.0.0",
+  "description": "A set of errors copied from Microsoft standard API error documentation.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hongkongkiwi/node-restify-standard-errors.git"
+  },
+  "keywords": [
+    "restify",
+    "errors",
+    "api"
+  ],
+  "author": "Andy Savage <andy@savage.hk> (http://andy.savage.hk/)",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/hongkongkiwi/node-restify-standard-errors/issues"
+  },
+  "homepage": "https://github.com/hongkongkiwi/node-restify-standard-errors"
+}
