@@ -174,17 +174,17 @@ module.exports = function(restify) {
   util.inherits(InvalidHttpVerb, restify.RestError);
 
 
-  EmptyMetadataKey	Bad Request (400)	The key for one of the metadata key-value pairs is empty.
-  InvalidXmlDocument	Bad Request (400)	The specified XML is not syntactically valid.
-  Md5Mismatch	Bad Request (400)	The MD5 value specified in the request did not match the MD5 value calculated by the server.
-  InvalidMd5	Bad Request (400)	The MD5 value specified in the request is invalid. The MD5 value must be 128 bits and Base64-encoded.
-
-  OutOfRangeInput	Bad Request (400)	One of the request inputs is out of range.
-  InvalidAuthenticationInfo	Bad Request (400)	The authentication information was not provided in the correct format. Verify the value of Authorization header.
-  InvalidInput	Bad Request (400)	One of the request inputs is not valid.
-  InvalidMetadata	Bad Request (400)	The specified metadata is invalid. It includes characters that are not permitted.
-  InvalidResourceName	Bad Request (400)	The specifed resource name contains invalid characters.
-  MetadataTooLarge	Bad Request (400)	The size of the specified metadata exceeds the maximum size permitted.
+  // EmptyMetadataKey	Bad Request (400)	The key for one of the metadata key-value pairs is empty.
+  // InvalidXmlDocument	Bad Request (400)	The specified XML is not syntactically valid.
+  // Md5Mismatch	Bad Request (400)	The MD5 value specified in the request did not match the MD5 value calculated by the server.
+  // InvalidMd5	Bad Request (400)	The MD5 value specified in the request is invalid. The MD5 value must be 128 bits and Base64-encoded.
+  //
+  // OutOfRangeInput	Bad Request (400)	One of the request inputs is out of range.
+  // InvalidAuthenticationInfo	Bad Request (400)	The authentication information was not provided in the correct format. Verify the value of Authorization header.
+  // InvalidInput	Bad Request (400)	One of the request inputs is not valid.
+  // InvalidMetadata	Bad Request (400)	The specified metadata is invalid. It includes characters that are not permitted.
+  // InvalidResourceName	Bad Request (400)	The specifed resource name contains invalid characters.
+  // MetadataTooLarge	Bad Request (400)	The size of the specified metadata exceeds the maximum size permitted.
 
   function ConditionHeadersNotSupported(message) {
     restify.RestError.call(this, {
