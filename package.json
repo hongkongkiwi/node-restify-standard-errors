@@ -1,5 +1,5 @@
 {
-  "name": "node-standard-errors",
+  "name": "restify-standard-errors",
   "version": "1.0.0",
   "description": "A set of errors copied from Microsoft standard API error documentation.",
   "main": "index.js",
