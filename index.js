@@ -1,11 +1,10 @@
 /*
 * A set of standard restify errors based on the microsoft API defintions: http://msdn.microsoft.com/en-us/library/azure/dd179357.aspx
 */
-
+var restify = require('restify');
 var util = require('util');
 
-module.exports = function(restify) {
-  function ConditionNotMet(message) {
+module.exports.ConditionNotMet = function (message) {
     restify.RestError.call(this, {
       restCode: 'ConditionNotMet',
       statusCode: 304,
@@ -17,7 +16,7 @@ module.exports = function(restify) {
   };
   util.inherits(ConditionNotMet, restify.RestError);
 
-  function MissingRequiredHeader(message) {
+module.exports.MissingRequiredHeader = function (message) {
     restify.RestError.call(this, {
       restCode: 'MissingRequiredHeader',
       statusCode: 400,
@@ -29,7 +28,7 @@ module.exports = function(restify) {
   };
   util.inherits(MissingRequiredHeader, restify.RestError);
 
-  function MissingRequiredXmlNode(message) {
+module.exports.MissingRequiredXmlNode = function (message) {
     restify.RestError.call(this, {
       restCode: 'MissingRequiredXmlNode',
       statusCode: 400,
@@ -41,7 +40,7 @@ module.exports = function(restify) {
   };
   util.inherits(MissingRequiredXmlNode, restify.RestError);
 
-  function UnsupportedHeader(message) {
+module.exports.UnsupportedHeader = function (message) {
     restify.RestError.call(this, {
       restCode: 'UnsupportedHeader',
       statusCode: 400,
@@ -53,7 +52,7 @@ module.exports = function(restify) {
   };
   util.inherits(UnsupportedHeader, restify.RestError);
 
-  function UnsupportedXmlNode(message) {
+module.exports.UnsupportedXmlNode = function (message) {
     restify.RestError.call(this, {
       restCode: 'UnsupportedXmlNode',
       statusCode: 400,
@@ -65,7 +64,7 @@ module.exports = function(restify) {
   };
   util.inherits(UnsupportedXmlNode, restify.RestError);
 
-  function InvalidHeaderValue(message) {
+module.exports.InvalidHeaderValue = function (message) {
     restify.RestError.call(this, {
       restCode: 'InvalidHeaderValue',
       statusCode: 400,
@@ -77,7 +76,7 @@ module.exports = function(restify) {
   };
   util.inherits(InvalidHeaderValue, restify.RestError);
 
-  function InvalidXmlNodeValue(message) {
+module.exports.InvalidXmlNodeValue = function (message) {
     restify.RestError.call(this, {
       restCode: 'InvalidXmlNodeValue',
       statusCode: 400,
@@ -89,7 +88,7 @@ module.exports = function(restify) {
   };
   util.inherits(InvalidXmlNodeValue, restify.RestError);
 
-  function MissingRequiredQueryParameter(message) {
+module.exports.MissingRequiredQueryParameter = function (message) {
     restify.RestError.call(this, {
       restCode: 'MissingRequiredQueryParameter',
       statusCode: 400,
@@ -101,7 +100,7 @@ module.exports = function(restify) {
   };
   util.inherits(InvalidXmlNodeValue, restify.RestError);
 
-  function UnsupportedQueryParameter(message) {
+module.exports.UnsupportedQueryParameter = function (message) {
     restify.RestError.call(this, {
       restCode: 'UnsupportedQueryParameter',
       statusCode: 400,
@@ -113,7 +112,7 @@ module.exports = function(restify) {
   };
   util.inherits(UnsupportedQueryParameter, restify.RestError);
 
-  function InvalidQueryParameterValue(message) {
+module.exports.InvalidQueryParameterValue = function (message) {
     restify.RestError.call(this, {
       restCode: 'InvalidQueryParameterValue',
       statusCode: 400,
@@ -125,7 +124,7 @@ module.exports = function(restify) {
   };
   util.inherits(InvalidQueryParameterValue, restify.RestError);
 
-  function OutOfRangeQueryParameterValue(message) {
+module.exports.OutOfRangeQueryParameterValue = function (message) {
     restify.RestError.call(this, {
       restCode: 'OutOfRangeQueryParameterValue',
       statusCode: 400,
@@ -137,7 +136,7 @@ module.exports = function(restify) {
   };
   util.inherits(OutOfRangeQueryParameterValue, restify.RestError);
 
-  function RequestUrlFailedToParse(message) {
+module.exports.RequestUrlFailedToParse = function (message) {
     restify.RestError.call(this, {
       restCode: 'RequestUrlFailedToParse',
       statusCode: 400,
@@ -149,7 +148,7 @@ module.exports = function(restify) {
   };
   util.inherits(RequestUrlFailedToParse, restify.RestError);
 
-  function InvalidUri(message) {
+module.exports.InvalidUri = function (message) {
     restify.RestError.call(this, {
       restCode: 'InvalidUri',
       statusCode: 400,
@@ -161,7 +160,7 @@ module.exports = function(restify) {
   };
   util.inherits(InvalidUri, restify.RestError);
 
-  function InvalidHttpVerb(message) {
+module.exports.InvalidHttpVerb = function (message) {
     restify.RestError.call(this, {
       restCode: 'InvalidHttpVerb',
       statusCode: 400,
@@ -186,7 +185,7 @@ module.exports = function(restify) {
   // InvalidResourceName	Bad Request (400)	The specifed resource name contains invalid characters.
   // MetadataTooLarge	Bad Request (400)	The size of the specified metadata exceeds the maximum size permitted.
 
-  function ConditionHeadersNotSupported(message) {
+module.exports.ConditionHeadersNotSupported = function (message) {
     restify.RestError.call(this, {
       restCode: 'ConditionHeadersNotSupported',
       statusCode: 400,
@@ -198,7 +197,7 @@ module.exports = function(restify) {
   };
   util.inherits(ConditionHeadersNotSupported, restify.RestError);
 
-  function MultipleConditionHeadersNotSupported(message) {
+module.exports.MultipleConditionHeadersNotSupported = function (message) {
     restify.RestError.call(this, {
       restCode: 'MultipleConditionHeadersNotSupported',
       statusCode: 400,
@@ -210,7 +209,7 @@ module.exports = function(restify) {
   };
   util.inherits(MultipleConditionHeadersNotSupported, restify.RestError);
 
-  function AuthenticationFailed(message) {
+module.exports.AuthenticationFailed = function (message) {
     restify.RestError.call(this, {
       restCode: 'AuthenticationFailed',
       statusCode: 403,
@@ -222,7 +221,7 @@ module.exports = function(restify) {
   };
   util.inherits(AuthenticationFailed, restify.RestError);
 
-  function ResourceNotFound(message) {
+module.exports.ResourceNotFound = function (message) {
     restify.RestError.call(this, {
       restCode: 'ResourceNotFound',
       statusCode: 404,
@@ -234,7 +233,7 @@ module.exports = function(restify) {
   };
   util.inherits(ResourceNotFound, restify.RestError);
 
-  function AccountIsDisabled(message) {
+module.exports.AccountIsDisabled = function (message) {
     restify.RestError.call(this, {
       restCode: 'AccountIsDisabled',
       statusCode: 403,
@@ -246,7 +245,7 @@ module.exports = function(restify) {
   };
   util.inherits(AccountIsDisabled, restify.RestError);
 
-  function InsufficientAccountPermissions(message) {
+module.exports.InsufficientAccountPermissions = function (message) {
     restify.RestError.call(this, {
       restCode: 'InsufficientAccountPermissions',
       statusCode: 403,
@@ -258,7 +257,7 @@ module.exports = function(restify) {
   };
   util.inherits(InsufficientAccountPermissions, restify.RestError);
 
-  function InsufficientAccountPermissions(message) {
+module.exports.InsufficientAccountPermissions = function (message) {
     restify.RestError.call(this, {
       restCode: 'InsufficientAccountPermissions',
       statusCode: 405,
@@ -270,7 +269,7 @@ module.exports = function(restify) {
   };
   util.inherits(AccountIsDisabled, restify.RestError);
 
-  function UnsupportedHttpVerb(message) {
+module.exports.UnsupportedHttpVerb = function (message) {
     restify.RestError.call(this, {
       restCode: 'UnsupportedHttpVerb',
       statusCode: 405,
@@ -282,7 +281,7 @@ module.exports = function(restify) {
   };
   util.inherits(UnsupportedHttpVerb, restify.RestError);
 
-  function AccountAlreadyExists(message) {
+module.exports.AccountAlreadyExists = function (message) {
     restify.RestError.call(this, {
       restCode: 'AccountAlreadyExists',
       statusCode: 409,
@@ -294,7 +293,7 @@ module.exports = function(restify) {
   };
   util.inherits(AccountAlreadyExists, restify.RestError);
 
-  function AccountBeingCreated(message) {
+module.exports.AccountBeingCreated = function (message) {
     restify.RestError.call(this, {
       restCode: 'AccountBeingCreated',
       statusCode: 409,
@@ -306,7 +305,7 @@ module.exports = function(restify) {
   };
   util.inherits(AccountBeingCreated, restify.RestError);
 
-  function ResourceAlreadyExists(message) {
+module.exports.ResourceAlreadyExists = function (message) {
     restify.RestError.call(this, {
       restCode: 'ResourceAlreadyExists',
       statusCode: 409,
@@ -318,7 +317,7 @@ module.exports = function(restify) {
   };
   util.inherits(ResourceAlreadyExists, restify.RestError);
 
-  function ResourceTypeMismatch(message) {
+module.exports.ResourceTypeMismatch = function (message) {
     restify.RestError.call(this, {
       restCode: 'ResourceTypeMismatch',
       statusCode: 409,
@@ -330,7 +329,7 @@ module.exports = function(restify) {
   };
   util.inherits(ResourceTypeMismatch, restify.RestError);
 
-  function MissingContentLengthHeader(message) {
+module.exports.MissingContentLengthHeader = function (message) {
     restify.RestError.call(this, {
       restCode: 'MissingContentLengthHeader',
       statusCode: 411,
@@ -342,7 +341,7 @@ module.exports = function(restify) {
   };
   util.inherits(MissingContentLengthHeader, restify.RestError);
 
-  function ConditionNotMet(message) {
+module.exports.ConditionNotMet = function (message) {
     restify.RestError.call(this, {
       restCode: 'ConditionNotMet',
       statusCode: 412,
@@ -354,7 +353,7 @@ module.exports = function(restify) {
   };
   util.inherits(ConditionNotMet, restify.RestError);
 
-  function RequestBodyTooLarge(message) {
+module.exports.RequestBodyTooLarge = function (message) {
     restify.RestError.call(this, {
       restCode: 'RequestBodyTooLarge',
       statusCode: 413,
@@ -366,7 +365,7 @@ module.exports = function(restify) {
   };
   util.inherits(RequestBodyTooLarge, restify.RestError);
 
-  function InvalidRange(message) {
+module.exports.InvalidRange = function (message) {
     restify.RestError.call(this, {
       restCode: 'InvalidRange',
       statusCode: 416,
@@ -378,19 +377,7 @@ module.exports = function(restify) {
   };
   util.inherits(InvalidRange, restify.RestError);
 
-  function InvalidRange(message) {
-    restify.RestError.call(this, {
-      restCode: 'InvalidRange',
-      statusCode: 416,
-      message: message,
-      description: "The range specified is invalid for the current size of the resource.",
-      constructorOpt: InvalidRange
-    });
-    this.name = 'InvalidRange';
-  };
-  util.inherits(InvalidRange, restify.RestError);
-
-  function InternalError(message) {
+module.exports.InternalError = function (message) {
     restify.RestError.call(this, {
       restCode: 'InternalError',
       statusCode: 500,
@@ -402,7 +389,7 @@ module.exports = function(restify) {
   };
   util.inherits(InternalError, restify.RestError);
 
-  function OperationTimedOut(message) {
+module.exports.OperationTimedOut = function (message) {
     restify.RestError.call(this, {
       restCode: 'OperationTimedOut',
       statusCode: 500,
@@ -414,7 +401,7 @@ module.exports = function(restify) {
   };
   util.inherits(OperationTimedOut, restify.RestError);
 
-  function ServerBusy(message) {
+module.exports.ServerBusy = function (message) {
     restify.RestError.call(this, {
       restCode: 'ServerBusy',
       statusCode: 500,

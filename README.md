@@ -9,19 +9,15 @@ Adds a standard set of API errors [Restify framework](https://github.com/mcavage
 
 `$ npm install restify-standard-errors`
 
-To initialize the errors simply replace
+In your code put
 
-`var restify = require('restify')`
-
-with
-
-`var restify = require('restify-standard-errors')(require('restify'));`
+`var errors = require('restify-standard-errors')`
 
 ## Usage
 
 ```javascript
 server.get('/hello/:name', function(req, res, next) {
-  return next(new restify.errors.AccountAlreadyExists());
+  return next(new errors.AccountAlreadyExists());
 });
 ```
 
