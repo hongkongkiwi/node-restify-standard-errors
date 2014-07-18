@@ -1,7 +1,9 @@
 Restify Standard Errors
 ============================
 
-Adds a standard set of API errors Restify framework based on [Microsoft MSDN API Error Standards](http://msdn.microsoft.com/en-us/library/azure/dd179357.aspx).
+![Funny Picture](http://editorial.designtaxi.com/news-httpstatuscats1612/1.jpg)
+
+Adds a standard set of API errors [Restify framework](https://github.com/mcavage/node-restify) based on [Microsoft MSDN API Error Standards](http://msdn.microsoft.com/en-us/library/azure/dd179357.aspx).
 
 ## Installation
 
