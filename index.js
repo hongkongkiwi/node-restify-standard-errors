@@ -1,32 +1,32 @@
 /*
 * A set of standard restify errors based on the microsoft API defintions: http://msdn.microsoft.com/en-us/library/azure/dd179357.aspx
 */
-var restify = require('restify');
-var util = require('util');
+var restify = require('restify'),
+    util = require('util');
 
 // Here we define a formatter to properly read our errors
-var formatter = function( req, res, body ) {
-  if (body instanceof Error) {
-    // snoop for RestError or HttpError, but don't rely on
-    // instanceof
-    res.statusCode = body.statusCode || 500;
-
-    if (body.body) {
-      body = body.body;
-    } else {
-      body = {
-        message: body.message
-      };
-    }
-  } else if (Buffer.isBuffer(body)) {
-    body = body.toString('base64');
-  }
-
-  var data = JSON.stringify(body);
-  res.setHeader('Content-Length', Buffer.byteLength(data));
-
-  return (data);
-}
+// var formatter = function( req, res, body ) {
+//   if (body instanceof Error) {
+//     // snoop for RestError or HttpError, but don't rely on
+//     // instanceof
+//     res.statusCode = body.statusCode || 500;
+//
+//     if (body.body) {
+//       body = body.body;
+//     } else {
+//       body = {
+//         message: body.message
+//       };
+//     }
+//   } else if (Buffer.isBuffer(body)) {
+//     body = body.toString('base64');
+//   }
+//
+//   var data = JSON.stringify(body);
+//   res.setHeader('Content-Length', Buffer.byteLength(data));
+//
+//   return (data);
+// }
 
 var errors = {};
 
@@ -40,7 +40,7 @@ errors.ConditionNotMetError = function (message) {
   });
   this.name = 'ConditionNotMetError';
 };
-util.inherits(errors.ConditionNotMet, restify.RestError);
+util.inherits(errors.ConditionNotMetError, restify.RestError);
 
 errors.MissingRequiredHeaderError = function (message) {
   restify.RestError.call(this, {
@@ -52,7 +52,7 @@ errors.MissingRequiredHeaderError = function (message) {
   });
   this.name = 'MissingRequiredHeaderError';
 };
-util.inherits(errors.MissingRequiredHeader, restify.RestError);
+util.inherits(errors.MissingRequiredHeaderError, restify.RestError);
 
 errors.MissingRequiredXmlNodeError = function (message) {
   restify.RestError.call(this, {
@@ -64,7 +64,7 @@ errors.MissingRequiredXmlNodeError = function (message) {
   });
   this.name = 'MissingRequiredXmlNodeError';
 };
-util.inherits(errors.MissingRequiredXmlNode, restify.RestError);
+util.inherits(errors.MissingRequiredXmlNodeError, restify.RestError);
 
 errors.UnsupportedHeaderError = function (message) {
   restify.RestError.call(this, {
@@ -76,7 +76,7 @@ errors.UnsupportedHeaderError = function (message) {
   });
   this.name = 'UnsupportedHeaderError';
 };
-util.inherits(errors.UnsupportedHeader, restify.RestError);
+util.inherits(errors.UnsupportedHeaderError, restify.RestError);
 
 errors.UnsupportedXmlNodeError = function (message) {
   restify.RestError.call(this, {
@@ -88,7 +88,7 @@ errors.UnsupportedXmlNodeError = function (message) {
   });
   this.name = 'UnsupportedXmlNodeError';
 };
-util.inherits(errors.UnsupportedXmlNode, restify.RestError);
+util.inherits(errors.UnsupportedXmlNodeError, restify.RestError);
 
 errors.InvalidHeaderValueError = function (message) {
   restify.RestError.call(this, {
@@ -100,7 +100,7 @@ errors.InvalidHeaderValueError = function (message) {
   });
   this.name = 'InvalidHeaderValueError';
 };
-util.inherits(errors.InvalidHeaderValue, restify.RestError);
+util.inherits(errors.InvalidHeaderValueError, restify.RestError);
 
 errors.InvalidXmlNodeValueError = function (message) {
   restify.RestError.call(this, {
@@ -112,7 +112,7 @@ errors.InvalidXmlNodeValueError = function (message) {
   });
   this.name = 'InvalidXmlNodeValueError';
 };
-util.inherits(errors.InvalidXmlNodeValue, restify.RestError);
+util.inherits(errors.InvalidXmlNodeValueError, restify.RestError);
 
 errors.MissingRequiredQueryParameterError = function (message) {
   restify.RestError.call(this, {
@@ -124,7 +124,7 @@ errors.MissingRequiredQueryParameterError = function (message) {
   });
   this.name = 'MissingRequiredQueryParameterError';
 };
-util.inherits(errors.InvalidXmlNodeValue, restify.RestError);
+util.inherits(errors.InvalidXmlNodeValueError, restify.RestError);
 
 errors.UnsupportedQueryParameterError = function (message) {
   restify.RestError.call(this, {
@@ -136,7 +136,7 @@ errors.UnsupportedQueryParameterError = function (message) {
   });
   this.name = 'UnsupportedQueryParameterError';
 };
-util.inherits(errors.UnsupportedQueryParameter, restify.RestError);
+util.inherits(errors.UnsupportedQueryParameterError, restify.RestError);
 
 errors.InvalidQueryParameterValueError = function (message) {
   restify.RestError.call(this, {
@@ -148,7 +148,7 @@ errors.InvalidQueryParameterValueError = function (message) {
   });
   this.name = 'InvalidQueryParameterValueError';
 };
-util.inherits(errors.InvalidQueryParameterValue, restify.RestError);
+util.inherits(errors.InvalidQueryParameterValueError, restify.RestError);
 
 errors.OutOfRangeQueryParameterValueError = function (message) {
   restify.RestError.call(this, {
@@ -160,7 +160,7 @@ errors.OutOfRangeQueryParameterValueError = function (message) {
   });
   this.name = 'OutOfRangeQueryParameterValueError';
 };
-util.inherits(errors.OutOfRangeQueryParameterValue, restify.RestError);
+util.inherits(errors.OutOfRangeQueryParameterValueError, restify.RestError);
 
 errors.RequestUrlFailedToParseError = function (message) {
   restify.RestError.call(this, {
@@ -172,7 +172,7 @@ errors.RequestUrlFailedToParseError = function (message) {
   });
   this.name = 'RequestUrlFailedToParseError';
 };
-util.inherits(errors.RequestUrlFailedToParse, restify.RestError);
+util.inherits(errors.RequestUrlFailedToParseError, restify.RestError);
 
 errors.InvalidUriError = function (message) {
   restify.RestError.call(this, {
@@ -184,7 +184,7 @@ errors.InvalidUriError = function (message) {
   });
   this.name = 'InvalidUriError';
 };
-util.inherits(errors.InvalidUri, restify.RestError);
+util.inherits(errors.InvalidUriError, restify.RestError);
 
 errors.InvalidHttpVerbError = function (message) {
   restify.RestError.call(this, {
@@ -196,7 +196,7 @@ errors.InvalidHttpVerbError = function (message) {
   });
   this.name = 'InvalidHttpVerbError';
 };
-util.inherits(errors.InvalidHttpVerb, restify.RestError);
+util.inherits(errors.InvalidHttpVerbError, restify.RestError);
 
 
 // EmptyMetadataKey	Bad Request (400)	The key for one of the metadata key-value pairs is empty.
@@ -221,7 +221,7 @@ errors.ConditionHeadersNotSupportedError = function (message) {
   });
   this.name = 'ConditionHeadersNotSupportedError';
 };
-util.inherits(errors.ConditionHeadersNotSupported, restify.RestError);
+util.inherits(errors.ConditionHeadersNotSupportedError, restify.RestError);
 
 errors.MultipleConditionHeadersNotSupportedError = function (message) {
   restify.RestError.call(this, {
@@ -233,7 +233,7 @@ errors.MultipleConditionHeadersNotSupportedError = function (message) {
   });
   this.name = 'MultipleConditionHeadersNotSupportedError';
 };
-util.inherits(errors.MultipleConditionHeadersNotSupported, restify.RestError);
+util.inherits(errors.MultipleConditionHeadersNotSupportedError, restify.RestError);
 
 errors.AuthenticationFailedError = function (message) {
   restify.RestError.call(this, {
@@ -245,7 +245,7 @@ errors.AuthenticationFailedError = function (message) {
   });
   this.name = 'AuthenticationFailedError';
 };
-util.inherits(errors.AuthenticationFailed, restify.RestError);
+util.inherits(errors.AuthenticationFailedError, restify.RestError);
 
 errors.ResourceNotFoundError = function (message) {
   restify.RestError.call(this, {
@@ -257,7 +257,7 @@ errors.ResourceNotFoundError = function (message) {
   });
   this.name = 'ResourceNotFoundError';
 };
-util.inherits(errors.ResourceNotFound, restify.RestError);
+util.inherits(errors.ResourceNotFoundError, restify.RestError);
 
 errors.AccountIsDisabledError = function (message) {
   restify.RestError.call(this, {
@@ -269,7 +269,7 @@ errors.AccountIsDisabledError = function (message) {
   });
   this.name = 'AccountIsDisabledError';
 };
-util.inherits(errors.AccountIsDisabled, restify.RestError);
+util.inherits(errors.AccountIsDisabledError, restify.RestError);
 
 errors.InsufficientAccountPermissionsError = function (message) {
   restify.RestError.call(this, {
@@ -281,7 +281,7 @@ errors.InsufficientAccountPermissionsError = function (message) {
   });
   this.name = 'InsufficientAccountPermissionsError';
 };
-util.inherits(errors.InsufficientAccountPermissions, restify.RestError);
+util.inherits(errors.InsufficientAccountPermissionsError, restify.RestError);
 
 errors.InsufficientAccountPermissionsError = function (message) {
   restify.RestError.call(this, {
@@ -293,7 +293,7 @@ errors.InsufficientAccountPermissionsError = function (message) {
   });
   this.name = 'InsufficientAccountPermissionsError';
 };
-util.inherits(errors.AccountIsDisabled, restify.RestError);
+util.inherits(errors.AccountIsDisabledError, restify.RestError);
 
 errors.UnsupportedHttpVerbError = function (message) {
   restify.RestError.call(this, {
@@ -305,7 +305,7 @@ errors.UnsupportedHttpVerbError = function (message) {
   });
   this.name = 'UnsupportedHttpVerbError';
 };
-util.inherits(errors.UnsupportedHttpVerb, restify.RestError);
+util.inherits(errors.UnsupportedHttpVerbError, restify.RestError);
 
 errors.AccountAlreadyExistsError = function (message) {
   restify.RestError.call(this, {
@@ -317,7 +317,7 @@ errors.AccountAlreadyExistsError = function (message) {
   });
   this.name = 'AccountAlreadyExistsError';
 };
-util.inherits(errors.AccountAlreadyExists, restify.RestError);
+util.inherits(errors.AccountAlreadyExistsError, restify.RestError);
 
 errors.AccountBeingCreatedError = function (message) {
   restify.RestError.call(this, {
@@ -329,7 +329,7 @@ errors.AccountBeingCreatedError = function (message) {
   });
   this.name = 'AccountBeingCreatedError';
 };
-util.inherits(errors.AccountBeingCreated, restify.RestError);
+util.inherits(errors.AccountBeingCreatedError, restify.RestError);
 
 errors.ResourceAlreadyExistsError = function (message) {
   restify.RestError.call(this, {
@@ -341,7 +341,7 @@ errors.ResourceAlreadyExistsError = function (message) {
   });
   this.name = 'ResourceAlreadyExistsError';
 };
-util.inherits(errors.ResourceAlreadyExists, restify.RestError);
+util.inherits(errors.ResourceAlreadyExistsError, restify.RestError);
 
 errors.ResourceTypeMismatchError = function (message) {
   restify.RestError.call(this, {
@@ -353,7 +353,7 @@ errors.ResourceTypeMismatchError = function (message) {
   });
   this.name = 'ResourceTypeMismatchError';
 };
-util.inherits(errors.ResourceTypeMismatch, restify.RestError);
+util.inherits(errors.ResourceTypeMismatchError, restify.RestError);
 
 errors.MissingContentLengthHeaderError = function (message) {
   restify.RestError.call(this, {
@@ -365,7 +365,7 @@ errors.MissingContentLengthHeaderError = function (message) {
   });
   this.name = 'MissingContentLengthHeaderError';
 };
-util.inherits(errors.MissingContentLengthHeader, restify.RestError);
+util.inherits(errors.MissingContentLengthHeaderError, restify.RestError);
 
 errors.ConditionNotMetError = function (message) {
   restify.RestError.call(this, {
@@ -377,7 +377,7 @@ errors.ConditionNotMetError = function (message) {
   });
   this.name = 'ConditionNotMetError';
 };
-util.inherits(errors.ConditionNotMet, restify.RestError);
+util.inherits(errors.ConditionNotMetError, restify.RestError);
 
 errors.RequestBodyTooLargeError = function (message) {
   restify.RestError.call(this, {
@@ -389,7 +389,7 @@ errors.RequestBodyTooLargeError = function (message) {
   });
   this.name = 'RequestBodyTooLargeError';
 };
-util.inherits(errors.RequestBodyTooLarge, restify.RestError);
+util.inherits(errors.RequestBodyTooLargeError, restify.RestError);
 
 errors.InvalidRangeError = function (message) {
   restify.RestError.call(this, {
@@ -401,7 +401,7 @@ errors.InvalidRangeError = function (message) {
   });
   this.name = 'InvalidRangeError';
 };
-util.inherits(errors.InvalidRange, restify.RestError);
+util.inherits(errors.InvalidRangeError, restify.RestError);
 
 errors.InternalErrorError = function (message) {
   restify.RestError.call(this, {
@@ -413,7 +413,7 @@ errors.InternalErrorError = function (message) {
   });
   this.name = 'InternalErrorError';
 };
-util.inherits(errors.InternalError, restify.RestError);
+util.inherits(errors.InternalErrorError, restify.RestError);
 
 errors.OperationTimedOutError = function (message) {
   restify.RestError.call(this, {
@@ -425,7 +425,7 @@ errors.OperationTimedOutError = function (message) {
   });
   this.name = 'OperationTimedOutError';
 };
-util.inherits(errors.OperationTimedOut, restify.RestError);
+util.inherits(errors.OperationTimedOutError, restify.RestError);
 
 errors.ServerBusyError = function (message) {
   restify.RestError.call(this, {
@@ -437,8 +437,8 @@ errors.ServerBusyError = function (message) {
   });
   this.name = 'ServerBusyError';
 };
-util.inherits(errors.ServerBusy, restify.RestError);
+util.inherits(errors.ServerBusyError, restify.RestError);
 
 // Make them available outside the module
 module.exports.errors = errors;
-module.exports.formatter = formatter;
+//module.exports.formatter = formatter;

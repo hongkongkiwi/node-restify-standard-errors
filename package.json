@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/hongkongkiwi/node-restify-standard-errors/issues"
   },
-  "homepage": "https://github.com/hongkongkiwi/node-restify-standard-errors"
+  "homepage": "https://github.com/hongkongkiwi/node-restify-standard-errors",
+  "dependencies": {
+    "restify": "^2.8.1"
+  }
 }
