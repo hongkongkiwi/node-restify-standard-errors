@@ -4,7 +4,33 @@
 var restify = require('restify');
 var util = require('util');
 
-module.exports.ConditionNotMet = function (message) {
+// Here we define a formatter to properly read our errors
+var formatter = function( req, res, body ) {
+  if (body instanceof Error) {
+    // snoop for RestError or HttpError, but don't rely on
+    // instanceof
+    res.statusCode = body.statusCode || 500;
+
+    if (body.body) {
+      body = body.body;
+    } else {
+      body = {
+        message: body.message
+      };
+    }
+  } else if (Buffer.isBuffer(body)) {
+    body = body.toString('base64');
+  }
+
+  var data = JSON.stringify(body);
+  res.setHeader('Content-Length', Buffer.byteLength(data));
+
+  return (data);
+}
+
+var errors = {};
+
+errors.ConditionNotMetError = function (message) {
   restify.RestError.call(this, {
     restCode: 'ConditionNotMet',
     statusCode: 304,
@@ -12,11 +38,11 @@ module.exports.ConditionNotMet = function (message) {
     description: "The condition specified in the conditional header(s) was not met for a read operation.",
     constructorOpt: ConditionNotMet
   });
-  this.name = 'ConditionNotMet';
+  this.name = 'ConditionNotMetError';
 };
-util.inherits(module.exports.ConditionNotMet, restify.RestError);
+util.inherits(errors.ConditionNotMet, restify.RestError);
 
-module.exports.MissingRequiredHeader = function (message) {
+errors.MissingRequiredHeaderError = function (message) {
   restify.RestError.call(this, {
     restCode: 'MissingRequiredHeader',
     statusCode: 400,
@@ -24,11 +50,11 @@ module.exports.MissingRequiredHeader = function (message) {
     description: "A required HTTP header was not specified.",
     constructorOpt: MissingRequiredHeader
   });
-  this.name = 'MissingRequiredHeader';
+  this.name = 'MissingRequiredHeaderError';
 };
-util.inherits(module.exports.MissingRequiredHeader, restify.RestError);
+util.inherits(errors.MissingRequiredHeader, restify.RestError);
 
-module.exports.MissingRequiredXmlNode = function (message) {
+errors.MissingRequiredXmlNodeError = function (message) {
   restify.RestError.call(this, {
     restCode: 'MissingRequiredXmlNode',
     statusCode: 400,
@@ -36,11 +62,11 @@ module.exports.MissingRequiredXmlNode = function (message) {
     description: "A required XML node was not specified in the request body.",
     constructorOpt: MissingRequiredXmlNode
   });
-  this.name = 'MissingRequiredXmlNode';
+  this.name = 'MissingRequiredXmlNodeError';
 };
-util.inherits(module.exports.MissingRequiredXmlNode, restify.RestError);
+util.inherits(errors.MissingRequiredXmlNode, restify.RestError);
 
-module.exports.UnsupportedHeader = function (message) {
+errors.UnsupportedHeaderError = function (message) {
   restify.RestError.call(this, {
     restCode: 'UnsupportedHeader',
     statusCode: 400,
@@ -48,11 +74,11 @@ module.exports.UnsupportedHeader = function (message) {
     description: "One of the HTTP headers specified in the request is not supported.",
     constructorOpt: UnsupportedHeader
   });
-  this.name = 'UnsupportedHeader';
+  this.name = 'UnsupportedHeaderError';
 };
-util.inherits(module.exports.UnsupportedHeader, restify.RestError);
+util.inherits(errors.UnsupportedHeader, restify.RestError);
 
-module.exports.UnsupportedXmlNode = function (message) {
+errors.UnsupportedXmlNodeError = function (message) {
   restify.RestError.call(this, {
     restCode: 'UnsupportedXmlNode',
     statusCode: 400,
@@ -60,11 +86,11 @@ module.exports.UnsupportedXmlNode = function (message) {
     description: "One of the XML nodes specified in the request body is not supported.",
     constructorOpt: UnsupportedXmlNode
   });
-  this.name = 'UnsupportedXmlNode';
+  this.name = 'UnsupportedXmlNodeError';
 };
-util.inherits(module.exports.UnsupportedXmlNode, restify.RestError);
+util.inherits(errors.UnsupportedXmlNode, restify.RestError);
 
-module.exports.InvalidHeaderValue = function (message) {
+errors.InvalidHeaderValueError = function (message) {
   restify.RestError.call(this, {
     restCode: 'InvalidHeaderValue',
     statusCode: 400,
@@ -72,11 +98,11 @@ module.exports.InvalidHeaderValue = function (message) {
     description: "The value provided for one of the HTTP headers was not in the correct format.",
     constructorOpt: InvalidHeaderValue
   });
-  this.name = 'InvalidHeaderValue';
+  this.name = 'InvalidHeaderValueError';
 };
-util.inherits(module.exports.InvalidHeaderValue, restify.RestError);
+util.inherits(errors.InvalidHeaderValue, restify.RestError);
 
-module.exports.InvalidXmlNodeValue = function (message) {
+errors.InvalidXmlNodeValueError = function (message) {
   restify.RestError.call(this, {
     restCode: 'InvalidXmlNodeValue',
     statusCode: 400,
@@ -84,11 +110,11 @@ module.exports.InvalidXmlNodeValue = function (message) {
     description: "	The value provided for one of the XML nodes in the request body was not in the correct format.",
     constructorOpt: InvalidXmlNodeValue
   });
-  this.name = 'InvalidXmlNodeValue';
+  this.name = 'InvalidXmlNodeValueError';
 };
-util.inherits(module.exports.InvalidXmlNodeValue, restify.RestError);
+util.inherits(errors.InvalidXmlNodeValue, restify.RestError);
 
-module.exports.MissingRequiredQueryParameter = function (message) {
+errors.MissingRequiredQueryParameterError = function (message) {
   restify.RestError.call(this, {
     restCode: 'MissingRequiredQueryParameter',
     statusCode: 400,
@@ -96,11 +122,11 @@ module.exports.MissingRequiredQueryParameter = function (message) {
     description: "A required query parameter was not specified for this request.",
     constructorOpt: MissingRequiredQueryParameter
   });
-  this.name = 'MissingRequiredQueryParameter';
+  this.name = 'MissingRequiredQueryParameterError';
 };
-util.inherits(module.exports.InvalidXmlNodeValue, restify.RestError);
+util.inherits(errors.InvalidXmlNodeValue, restify.RestError);
 
-module.exports.UnsupportedQueryParameter = function (message) {
+errors.UnsupportedQueryParameterError = function (message) {
   restify.RestError.call(this, {
     restCode: 'UnsupportedQueryParameter',
     statusCode: 400,
@@ -108,11 +134,11 @@ module.exports.UnsupportedQueryParameter = function (message) {
     description: "One of the query parameters specified in the request URI is not supported.",
     constructorOpt: UnsupportedQueryParameter
   });
-  this.name = 'UnsupportedQueryParameter';
+  this.name = 'UnsupportedQueryParameterError';
 };
-util.inherits(module.exports.UnsupportedQueryParameter, restify.RestError);
+util.inherits(errors.UnsupportedQueryParameter, restify.RestError);
 
-module.exports.InvalidQueryParameterValue = function (message) {
+errors.InvalidQueryParameterValueError = function (message) {
   restify.RestError.call(this, {
     restCode: 'InvalidQueryParameterValue',
     statusCode: 400,
@@ -120,11 +146,11 @@ module.exports.InvalidQueryParameterValue = function (message) {
     description: "An invalid value was specified for one of the query parameters in the request URI.",
     constructorOpt: InvalidQueryParameterValue
   });
-  this.name = 'InvalidQueryParameterValue';
+  this.name = 'InvalidQueryParameterValueError';
 };
-util.inherits(module.exports.InvalidQueryParameterValue, restify.RestError);
+util.inherits(errors.InvalidQueryParameterValue, restify.RestError);
 
-module.exports.OutOfRangeQueryParameterValue = function (message) {
+errors.OutOfRangeQueryParameterValueError = function (message) {
   restify.RestError.call(this, {
     restCode: 'OutOfRangeQueryParameterValue',
     statusCode: 400,
@@ -132,11 +158,11 @@ module.exports.OutOfRangeQueryParameterValue = function (message) {
     description: "A query parameter specified in the request URI is outside the permissible range.",
     constructorOpt: OutOfRangeQueryParameterValue
   });
-  this.name = 'OutOfRangeQueryParameterValue';
+  this.name = 'OutOfRangeQueryParameterValueError';
 };
-util.inherits(module.exports.OutOfRangeQueryParameterValue, restify.RestError);
+util.inherits(errors.OutOfRangeQueryParameterValue, restify.RestError);
 
-module.exports.RequestUrlFailedToParse = function (message) {
+errors.RequestUrlFailedToParseError = function (message) {
   restify.RestError.call(this, {
     restCode: 'RequestUrlFailedToParse',
     statusCode: 400,
@@ -144,11 +170,11 @@ module.exports.RequestUrlFailedToParse = function (message) {
     description: "The url in the request could not be parsed.",
     constructorOpt: RequestUrlFailedToParse
   });
-  this.name = 'RequestUrlFailedToParse';
+  this.name = 'RequestUrlFailedToParseError';
 };
-util.inherits(module.exports.RequestUrlFailedToParse, restify.RestError);
+util.inherits(errors.RequestUrlFailedToParse, restify.RestError);
 
-module.exports.InvalidUri = function (message) {
+errors.InvalidUriError = function (message) {
   restify.RestError.call(this, {
     restCode: 'InvalidUri',
     statusCode: 400,
@@ -156,11 +182,11 @@ module.exports.InvalidUri = function (message) {
     description: "The requested URI does not represent any resource on the server.",
     constructorOpt: InvalidUri
   });
-  this.name = 'InvalidUri';
+  this.name = 'InvalidUriError';
 };
-util.inherits(module.exports.InvalidUri, restify.RestError);
+util.inherits(errors.InvalidUri, restify.RestError);
 
-module.exports.InvalidHttpVerb = function (message) {
+errors.InvalidHttpVerbError = function (message) {
   restify.RestError.call(this, {
     restCode: 'InvalidHttpVerb',
     statusCode: 400,
@@ -168,9 +194,9 @@ module.exports.InvalidHttpVerb = function (message) {
     description: "The HTTP verb specified was not recognized by the server.",
     constructorOpt: InvalidHttpVerb
   });
-  this.name = 'InvalidHttpVerb';
+  this.name = 'InvalidHttpVerbError';
 };
-util.inherits(module.exports.InvalidHttpVerb, restify.RestError);
+util.inherits(errors.InvalidHttpVerb, restify.RestError);
 
 
 // EmptyMetadataKey	Bad Request (400)	The key for one of the metadata key-value pairs is empty.
@@ -185,7 +211,7 @@ util.inherits(module.exports.InvalidHttpVerb, restify.RestError);
 // InvalidResourceName	Bad Request (400)	The specifed resource name contains invalid characters.
 // MetadataTooLarge	Bad Request (400)	The size of the specified metadata exceeds the maximum size permitted.
 
-module.exports.ConditionHeadersNotSupported = function (message) {
+errors.ConditionHeadersNotSupportedError = function (message) {
   restify.RestError.call(this, {
     restCode: 'ConditionHeadersNotSupported',
     statusCode: 400,
@@ -193,11 +219,11 @@ module.exports.ConditionHeadersNotSupported = function (message) {
     description: "Condition headers are not supported.",
     constructorOpt: ConditionHeadersNotSupported
   });
-  this.name = 'ConditionHeadersNotSupported';
+  this.name = 'ConditionHeadersNotSupportedError';
 };
-util.inherits(module.exports.ConditionHeadersNotSupported, restify.RestError);
+util.inherits(errors.ConditionHeadersNotSupported, restify.RestError);
 
-module.exports.MultipleConditionHeadersNotSupported = function (message) {
+errors.MultipleConditionHeadersNotSupportedError = function (message) {
   restify.RestError.call(this, {
     restCode: 'MultipleConditionHeadersNotSupported',
     statusCode: 400,
@@ -205,11 +231,11 @@ module.exports.MultipleConditionHeadersNotSupported = function (message) {
     description: "Multiple condition headers are not supported.",
     constructorOpt: MultipleConditionHeadersNotSupported
   });
-  this.name = 'MultipleConditionHeadersNotSupported';
+  this.name = 'MultipleConditionHeadersNotSupportedError';
 };
-util.inherits(module.exports.MultipleConditionHeadersNotSupported, restify.RestError);
+util.inherits(errors.MultipleConditionHeadersNotSupported, restify.RestError);
 
-module.exports.AuthenticationFailed = function (message) {
+errors.AuthenticationFailedError = function (message) {
   restify.RestError.call(this, {
     restCode: 'AuthenticationFailed',
     statusCode: 403,
@@ -217,11 +243,11 @@ module.exports.AuthenticationFailed = function (message) {
     description: "Server failed to authenticate the request. Make sure the value of the Authorization header is formed correctly including the signature.",
     constructorOpt: AuthenticationFailed
   });
-  this.name = 'AuthenticationFailed';
+  this.name = 'AuthenticationFailedError';
 };
-util.inherits(module.exports.AuthenticationFailed, restify.RestError);
+util.inherits(errors.AuthenticationFailed, restify.RestError);
 
-module.exports.ResourceNotFound = function (message) {
+errors.ResourceNotFoundError = function (message) {
   restify.RestError.call(this, {
     restCode: 'ResourceNotFound',
     statusCode: 404,
@@ -229,11 +255,11 @@ module.exports.ResourceNotFound = function (message) {
     description: "The specified resource does not exist.",
     constructorOpt: ResourceNotFound
   });
-  this.name = 'ResourceNotFound';
+  this.name = 'ResourceNotFoundError';
 };
-util.inherits(module.exports.ResourceNotFound, restify.RestError);
+util.inherits(errors.ResourceNotFound, restify.RestError);
 
-module.exports.AccountIsDisabled = function (message) {
+errors.AccountIsDisabledError = function (message) {
   restify.RestError.call(this, {
     restCode: 'AccountIsDisabled',
     statusCode: 403,
@@ -241,11 +267,11 @@ module.exports.AccountIsDisabled = function (message) {
     description: "The specified account is disabled.",
     constructorOpt: AccountIsDisabled
   });
-  this.name = 'AccountIsDisabled';
+  this.name = 'AccountIsDisabledError';
 };
-util.inherits(module.exports.AccountIsDisabled, restify.RestError);
+util.inherits(errors.AccountIsDisabled, restify.RestError);
 
-module.exports.InsufficientAccountPermissions = function (message) {
+errors.InsufficientAccountPermissionsError = function (message) {
   restify.RestError.call(this, {
     restCode: 'InsufficientAccountPermissions',
     statusCode: 403,
@@ -253,11 +279,11 @@ module.exports.InsufficientAccountPermissions = function (message) {
     description: "The account being accessed does not have sufficient permissions to execute this operation.",
     constructorOpt: InsufficientAccountPermissions
   });
-  this.name = 'InsufficientAccountPermissions';
+  this.name = 'InsufficientAccountPermissionsError';
 };
-util.inherits(module.exports.InsufficientAccountPermissions, restify.RestError);
+util.inherits(errors.InsufficientAccountPermissions, restify.RestError);
 
-module.exports.InsufficientAccountPermissions = function (message) {
+errors.InsufficientAccountPermissionsError = function (message) {
   restify.RestError.call(this, {
     restCode: 'InsufficientAccountPermissions',
     statusCode: 405,
@@ -265,11 +291,11 @@ module.exports.InsufficientAccountPermissions = function (message) {
     description: "The account being accessed does not have sufficient permissions to execute this operation.",
     constructorOpt: InsufficientAccountPermissions
   });
-  this.name = 'InsufficientAccountPermissions';
+  this.name = 'InsufficientAccountPermissionsError';
 };
-util.inherits(module.exports.AccountIsDisabled, restify.RestError);
+util.inherits(errors.AccountIsDisabled, restify.RestError);
 
-module.exports.UnsupportedHttpVerb = function (message) {
+errors.UnsupportedHttpVerbError = function (message) {
   restify.RestError.call(this, {
     restCode: 'UnsupportedHttpVerb',
     statusCode: 405,
@@ -277,11 +303,11 @@ module.exports.UnsupportedHttpVerb = function (message) {
     description: "The resource doesn't support the specified HTTP verb.",
     constructorOpt: UnsupportedHttpVerb
   });
-  this.name = 'UnsupportedHttpVerb';
+  this.name = 'UnsupportedHttpVerbError';
 };
-util.inherits(module.exports.UnsupportedHttpVerb, restify.RestError);
+util.inherits(errors.UnsupportedHttpVerb, restify.RestError);
 
-module.exports.AccountAlreadyExists = function (message) {
+errors.AccountAlreadyExistsError = function (message) {
   restify.RestError.call(this, {
     restCode: 'AccountAlreadyExists',
     statusCode: 409,
@@ -289,11 +315,11 @@ module.exports.AccountAlreadyExists = function (message) {
     description: "The specified account already exists.",
     constructorOpt: AccountAlreadyExists
   });
-  this.name = 'AccountAlreadyExists';
+  this.name = 'AccountAlreadyExistsError';
 };
-util.inherits(module.exports.AccountAlreadyExists, restify.RestError);
+util.inherits(errors.AccountAlreadyExists, restify.RestError);
 
-module.exports.AccountBeingCreated = function (message) {
+errors.AccountBeingCreatedError = function (message) {
   restify.RestError.call(this, {
     restCode: 'AccountBeingCreated',
     statusCode: 409,
@@ -301,11 +327,11 @@ module.exports.AccountBeingCreated = function (message) {
     description: "The specified account is in the process of being created.",
     constructorOpt: AccountBeingCreated
   });
-  this.name = 'AccountBeingCreated';
+  this.name = 'AccountBeingCreatedError';
 };
-util.inherits(module.exports.AccountBeingCreated, restify.RestError);
+util.inherits(errors.AccountBeingCreated, restify.RestError);
 
-module.exports.ResourceAlreadyExists = function (message) {
+errors.ResourceAlreadyExistsError = function (message) {
   restify.RestError.call(this, {
     restCode: 'ResourceAlreadyExists',
     statusCode: 409,
@@ -313,11 +339,11 @@ module.exports.ResourceAlreadyExists = function (message) {
     description: "The specified resource already exists.",
     constructorOpt: ResourceAlreadyExists
   });
-  this.name = 'ResourceAlreadyExists';
+  this.name = 'ResourceAlreadyExistsError';
 };
-util.inherits(module.exports.ResourceAlreadyExists, restify.RestError);
+util.inherits(errors.ResourceAlreadyExists, restify.RestError);
 
-module.exports.ResourceTypeMismatch = function (message) {
+errors.ResourceTypeMismatchError = function (message) {
   restify.RestError.call(this, {
     restCode: 'ResourceTypeMismatch',
     statusCode: 409,
@@ -325,11 +351,11 @@ module.exports.ResourceTypeMismatch = function (message) {
     description: "The specified resource type does not match the type of the existing resource.",
     constructorOpt: ResourceTypeMismatch
   });
-  this.name = 'ResourceTypeMismatch';
+  this.name = 'ResourceTypeMismatchError';
 };
-util.inherits(module.exports.ResourceTypeMismatch, restify.RestError);
+util.inherits(errors.ResourceTypeMismatch, restify.RestError);
 
-module.exports.MissingContentLengthHeader = function (message) {
+errors.MissingContentLengthHeaderError = function (message) {
   restify.RestError.call(this, {
     restCode: 'MissingContentLengthHeader',
     statusCode: 411,
@@ -337,11 +363,11 @@ module.exports.MissingContentLengthHeader = function (message) {
     description: "The Content-Length header was not specified.",
     constructorOpt: MissingContentLengthHeader
   });
-  this.name = 'MissingContentLengthHeader';
+  this.name = 'MissingContentLengthHeaderError';
 };
-util.inherits(module.exports.MissingContentLengthHeader, restify.RestError);
+util.inherits(errors.MissingContentLengthHeader, restify.RestError);
 
-module.exports.ConditionNotMet = function (message) {
+errors.ConditionNotMetError = function (message) {
   restify.RestError.call(this, {
     restCode: 'ConditionNotMet',
     statusCode: 412,
@@ -349,11 +375,11 @@ module.exports.ConditionNotMet = function (message) {
     description: "The condition specified in the conditional header(s) was not met for a write operation.",
     constructorOpt: ConditionNotMet
   });
-  this.name = 'ConditionNotMet';
+  this.name = 'ConditionNotMetError';
 };
-util.inherits(module.exports.ConditionNotMet, restify.RestError);
+util.inherits(errors.ConditionNotMet, restify.RestError);
 
-module.exports.RequestBodyTooLarge = function (message) {
+errors.RequestBodyTooLargeError = function (message) {
   restify.RestError.call(this, {
     restCode: 'RequestBodyTooLarge',
     statusCode: 413,
@@ -361,11 +387,11 @@ module.exports.RequestBodyTooLarge = function (message) {
     description: "The size of the request body exceeds the maximum size permitted.",
     constructorOpt: RequestBodyTooLarge
   });
-  this.name = 'RequestBodyTooLarge';
+  this.name = 'RequestBodyTooLargeError';
 };
-util.inherits(module.exports.RequestBodyTooLarge, restify.RestError);
+util.inherits(errors.RequestBodyTooLarge, restify.RestError);
 
-module.exports.InvalidRange = function (message) {
+errors.InvalidRangeError = function (message) {
   restify.RestError.call(this, {
     restCode: 'InvalidRange',
     statusCode: 416,
@@ -373,11 +399,11 @@ module.exports.InvalidRange = function (message) {
     description: "The range specified is invalid for the current size of the resource.",
     constructorOpt: InvalidRange
   });
-  this.name = 'InvalidRange';
+  this.name = 'InvalidRangeError';
 };
-util.inherits(module.exports.InvalidRange, restify.RestError);
+util.inherits(errors.InvalidRange, restify.RestError);
 
-module.exports.InternalError = function (message) {
+errors.InternalErrorError = function (message) {
   restify.RestError.call(this, {
     restCode: 'InternalError',
     statusCode: 500,
@@ -385,11 +411,11 @@ module.exports.InternalError = function (message) {
     description: "The server encountered an internal error. Please retry the request.",
     constructorOpt: InternalError
   });
-  this.name = 'InternalError';
+  this.name = 'InternalErrorError';
 };
-util.inherits(module.exports.InternalError, restify.RestError);
+util.inherits(errors.InternalError, restify.RestError);
 
-module.exports.OperationTimedOut = function (message) {
+errors.OperationTimedOutError = function (message) {
   restify.RestError.call(this, {
     restCode: 'OperationTimedOut',
     statusCode: 500,
@@ -397,11 +423,11 @@ module.exports.OperationTimedOut = function (message) {
     description: "The operation could not be completed within the permitted time.",
     constructorOpt: OperationTimedOut
   });
-  this.name = 'OperationTimedOut';
+  this.name = 'OperationTimedOutError';
 };
-util.inherits(module.exports.OperationTimedOut, restify.RestError);
+util.inherits(errors.OperationTimedOut, restify.RestError);
 
-module.exports.ServerBusy = function (message) {
+errors.ServerBusyError = function (message) {
   restify.RestError.call(this, {
     restCode: 'ServerBusy',
     statusCode: 500,
@@ -409,6 +435,10 @@ module.exports.ServerBusy = function (message) {
     description: "The server is currently unable to receive requests. Please retry your request.",
     constructorOpt: ServerBusy
   });
-  this.name = 'ServerBusy';
+  this.name = 'ServerBusyError';
 };
-util.inherits(module.exports.ServerBusy, restify.RestError);
+util.inherits(errors.ServerBusy, restify.RestError);
+
+// Make them available outside the module
+module.exports.errors = errors;
+module.exports.formatter = formatter;

@@ -16,8 +16,8 @@ In your code put
 ## Usage
 
 ```javascript
-server.get('/hello/:name', function(req, res, next) {
-  return next(new errors.AccountAlreadyExists());
+server.get('/register', function(req, res, next) {
+  return next(new errors.AccountAlreadyExistsError());
 });
 ```
 
