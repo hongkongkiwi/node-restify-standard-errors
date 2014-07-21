@@ -1,36 +1,36 @@
 /*
 * A set of standard restify errors based on the microsoft API defintions: http://msdn.microsoft.com/en-us/library/azure/dd179357.aspx
 */
-var restify = require('restify'),
-    util = require('util');
+var restify = require('restify');
+var util = require('util');
 
 // Here we define a formatter to properly read our errors
-// var formatter = function( req, res, body ) {
-//   if (body instanceof Error) {
-//     // snoop for RestError or HttpError, but don't rely on
-//     // instanceof
-//     res.statusCode = body.statusCode || 500;
-//
-//     if (body.body) {
-//       body = body.body;
-//     } else {
-//       body = {
-//         message: body.message
-//       };
-//     }
-//   } else if (Buffer.isBuffer(body)) {
-//     body = body.toString('base64');
-//   }
-//
-//   var data = JSON.stringify(body);
-//   res.setHeader('Content-Length', Buffer.byteLength(data));
-//
-//   return (data);
-// }
+var formatter = function( req, res, body ) {
+  if (body instanceof Error) {
+    // snoop for RestError or HttpError, but don't rely on
+    // instanceof
+    res.statusCode = body.statusCode || 500;
+
+    if (body.body) {
+      body = body.body;
+    } else {
+      body = {
+        message: body.message
+      };
+    }
+  } else if (Buffer.isBuffer(body)) {
+    body = body.toString('base64');
+  }
+
+  var data = JSON.stringify(body);
+  res.setHeader('Content-Length', Buffer.byteLength(data));
+
+  return (data);
+}
 
 var errors = {};
 
-errors.ConditionNotMetError = function (message) {
+errors.ConditionNotMet = function ConditionNotMet(message) {
   restify.RestError.call(this, {
     restCode: 'ConditionNotMet',
     statusCode: 304,
@@ -38,11 +38,11 @@ errors.ConditionNotMetError = function (message) {
     description: "The condition specified in the conditional header(s) was not met for a read operation.",
     constructorOpt: ConditionNotMet
   });
-  this.name = 'ConditionNotMetError';
+  this.name = 'ConditionNotMet';
 };
-util.inherits(errors.ConditionNotMetError, restify.RestError);
+util.inherits(errors.ConditionNotMet, restify.RestError);
 
-errors.MissingRequiredHeaderError = function (message) {
+errors.MissingRequiredHeader = function MissingRequiredHeader(message) {
   restify.RestError.call(this, {
     restCode: 'MissingRequiredHeader',
     statusCode: 400,
@@ -50,11 +50,11 @@ errors.MissingRequiredHeaderError = function (message) {
     description: "A required HTTP header was not specified.",
     constructorOpt: MissingRequiredHeader
   });
-  this.name = 'MissingRequiredHeaderError';
+  this.name = 'MissingRequiredHeader';
 };
-util.inherits(errors.MissingRequiredHeaderError, restify.RestError);
+util.inherits(errors.MissingRequiredHeader, restify.RestError);
 
-errors.MissingRequiredXmlNodeError = function (message) {
+errors.MissingRequiredXmlNode = function MissingRequiredXmlNode(message) {
   restify.RestError.call(this, {
     restCode: 'MissingRequiredXmlNode',
     statusCode: 400,
@@ -62,11 +62,11 @@ errors.MissingRequiredXmlNodeError = function (message) {
     description: "A required XML node was not specified in the request body.",
     constructorOpt: MissingRequiredXmlNode
   });
-  this.name = 'MissingRequiredXmlNodeError';
+  this.name = 'MissingRequiredXmlNode';
 };
-util.inherits(errors.MissingRequiredXmlNodeError, restify.RestError);
+util.inherits(errors.MissingRequiredXmlNode, restify.RestError);
 
-errors.UnsupportedHeaderError = function (message) {
+errors.UnsupportedHeader = function UnsupportedHeader(message) {
   restify.RestError.call(this, {
     restCode: 'UnsupportedHeader',
     statusCode: 400,
@@ -74,11 +74,11 @@ errors.UnsupportedHeaderError = function (message) {
     description: "One of the HTTP headers specified in the request is not supported.",
     constructorOpt: UnsupportedHeader
   });
-  this.name = 'UnsupportedHeaderError';
+  this.name = 'UnsupportedHeader';
 };
-util.inherits(errors.UnsupportedHeaderError, restify.RestError);
+util.inherits(errors.UnsupportedHeader, restify.RestError);
 
-errors.UnsupportedXmlNodeError = function (message) {
+errors.UnsupportedXmlNode = function UnsupportedXmlNode(message) {
   restify.RestError.call(this, {
     restCode: 'UnsupportedXmlNode',
     statusCode: 400,
@@ -86,11 +86,11 @@ errors.UnsupportedXmlNodeError = function (message) {
     description: "One of the XML nodes specified in the request body is not supported.",
     constructorOpt: UnsupportedXmlNode
   });
-  this.name = 'UnsupportedXmlNodeError';
+  this.name = 'UnsupportedXmlNode';
 };
-util.inherits(errors.UnsupportedXmlNodeError, restify.RestError);
+util.inherits(errors.UnsupportedXmlNode, restify.RestError);
 
-errors.InvalidHeaderValueError = function (message) {
+errors.InvalidHeaderValue = function InvalidHeaderValue(message) {
   restify.RestError.call(this, {
     restCode: 'InvalidHeaderValue',
     statusCode: 400,
@@ -98,11 +98,11 @@ errors.InvalidHeaderValueError = function (message) {
     description: "The value provided for one of the HTTP headers was not in the correct format.",
     constructorOpt: InvalidHeaderValue
   });
-  this.name = 'InvalidHeaderValueError';
+  this.name = 'InvalidHeaderValue';
 };
-util.inherits(errors.InvalidHeaderValueError, restify.RestError);
+util.inherits(errors.InvalidHeaderValue, restify.RestError);
 
-errors.InvalidXmlNodeValueError = function (message) {
+errors.InvalidXmlNodeValue = function InvalidXmlNodeValue(message) {
   restify.RestError.call(this, {
     restCode: 'InvalidXmlNodeValue',
     statusCode: 400,
@@ -110,11 +110,11 @@ errors.InvalidXmlNodeValueError = function (message) {
     description: "	The value provided for one of the XML nodes in the request body was not in the correct format.",
     constructorOpt: InvalidXmlNodeValue
   });
-  this.name = 'InvalidXmlNodeValueError';
+  this.name = 'InvalidXmlNodeValue';
 };
-util.inherits(errors.InvalidXmlNodeValueError, restify.RestError);
+util.inherits(errors.InvalidXmlNodeValue, restify.RestError);
 
-errors.MissingRequiredQueryParameterError = function (message) {
+errors.MissingRequiredQueryParameter = function MissingRequiredQueryParameter(message) {
   restify.RestError.call(this, {
     restCode: 'MissingRequiredQueryParameter',
     statusCode: 400,
@@ -122,11 +122,11 @@ errors.MissingRequiredQueryParameterError = function (message) {
     description: "A required query parameter was not specified for this request.",
     constructorOpt: MissingRequiredQueryParameter
   });
-  this.name = 'MissingRequiredQueryParameterError';
+  this.name = 'MissingRequiredQueryParameter';
 };
-util.inherits(errors.InvalidXmlNodeValueError, restify.RestError);
+util.inherits(errors.MissingRequiredQueryParameter, restify.RestError);
 
-errors.UnsupportedQueryParameterError = function (message) {
+errors.UnsupportedQueryParameter = function UnsupportedQueryParameter(message) {
   restify.RestError.call(this, {
     restCode: 'UnsupportedQueryParameter',
     statusCode: 400,
@@ -134,11 +134,11 @@ errors.UnsupportedQueryParameterError = function (message) {
     description: "One of the query parameters specified in the request URI is not supported.",
     constructorOpt: UnsupportedQueryParameter
   });
-  this.name = 'UnsupportedQueryParameterError';
+  this.name = 'UnsupportedQueryParameter';
 };
-util.inherits(errors.UnsupportedQueryParameterError, restify.RestError);
+util.inherits(errors.UnsupportedQueryParameter, restify.RestError);
 
-errors.InvalidQueryParameterValueError = function (message) {
+errors.InvalidQueryParameterValue = function InvalidQueryParameterValue(message) {
   restify.RestError.call(this, {
     restCode: 'InvalidQueryParameterValue',
     statusCode: 400,
@@ -146,11 +146,11 @@ errors.InvalidQueryParameterValueError = function (message) {
     description: "An invalid value was specified for one of the query parameters in the request URI.",
     constructorOpt: InvalidQueryParameterValue
   });
-  this.name = 'InvalidQueryParameterValueError';
+  this.name = 'InvalidQueryParameterValue';
 };
-util.inherits(errors.InvalidQueryParameterValueError, restify.RestError);
+util.inherits(errors.InvalidQueryParameterValue, restify.RestError);
 
-errors.OutOfRangeQueryParameterValueError = function (message) {
+errors.OutOfRangeQueryParameterValue = function OutOfRangeQueryParameterValue(message) {
   restify.RestError.call(this, {
     restCode: 'OutOfRangeQueryParameterValue',
     statusCode: 400,
@@ -158,11 +158,11 @@ errors.OutOfRangeQueryParameterValueError = function (message) {
     description: "A query parameter specified in the request URI is outside the permissible range.",
     constructorOpt: OutOfRangeQueryParameterValue
   });
-  this.name = 'OutOfRangeQueryParameterValueError';
+  this.name = 'OutOfRangeQueryParameterValue';
 };
-util.inherits(errors.OutOfRangeQueryParameterValueError, restify.RestError);
+util.inherits(errors.OutOfRangeQueryParameterValue, restify.RestError);
 
-errors.RequestUrlFailedToParseError = function (message) {
+errors.RequestUrlFailedToParse = function RequestUrlFailedToParse(message) {
   restify.RestError.call(this, {
     restCode: 'RequestUrlFailedToParse',
     statusCode: 400,
@@ -170,11 +170,11 @@ errors.RequestUrlFailedToParseError = function (message) {
     description: "The url in the request could not be parsed.",
     constructorOpt: RequestUrlFailedToParse
   });
-  this.name = 'RequestUrlFailedToParseError';
+  this.name = 'RequestUrlFailedToParse';
 };
-util.inherits(errors.RequestUrlFailedToParseError, restify.RestError);
+util.inherits(errors.RequestUrlFailedToParse, restify.RestError);
 
-errors.InvalidUriError = function (message) {
+errors.InvalidUri = function InvalidUri(message) {
   restify.RestError.call(this, {
     restCode: 'InvalidUri',
     statusCode: 400,
@@ -182,11 +182,11 @@ errors.InvalidUriError = function (message) {
     description: "The requested URI does not represent any resource on the server.",
     constructorOpt: InvalidUri
   });
-  this.name = 'InvalidUriError';
+  this.name = 'InvalidUri';
 };
-util.inherits(errors.InvalidUriError, restify.RestError);
+util.inherits(errors.InvalidUri, restify.RestError);
 
-errors.InvalidHttpVerbError = function (message) {
+errors.InvalidHttpVerb = function InvalidHttpVerb(message) {
   restify.RestError.call(this, {
     restCode: 'InvalidHttpVerb',
     statusCode: 400,
@@ -194,9 +194,9 @@ errors.InvalidHttpVerbError = function (message) {
     description: "The HTTP verb specified was not recognized by the server.",
     constructorOpt: InvalidHttpVerb
   });
-  this.name = 'InvalidHttpVerbError';
+  this.name = 'InvalidHttpVerb';
 };
-util.inherits(errors.InvalidHttpVerbError, restify.RestError);
+util.inherits(errors.InvalidHttpVerb, restify.RestError);
 
 
 // EmptyMetadataKey	Bad Request (400)	The key for one of the metadata key-value pairs is empty.
@@ -205,13 +205,26 @@ util.inherits(errors.InvalidHttpVerbError, restify.RestError);
 // InvalidMd5	Bad Request (400)	The MD5 value specified in the request is invalid. The MD5 value must be 128 bits and Base64-encoded.
 //
 // OutOfRangeInput	Bad Request (400)	One of the request inputs is out of range.
-// InvalidAuthenticationInfo	Bad Request (400)	The authentication information was not provided in the correct format. Verify the value of Authorization header.
+
+errors.InvalidAuthenticationInfo = function InvalidAuthenticationInfo(message) {
+  restify.RestError.call(this, {
+    restCode: 'InvalidAuthenticationInfo',
+    statusCode: 400,
+    message: message,
+    description: "The authentication information was not provided in the correct format. Verify the value of Authorization header.",
+    constructorOpt: InvalidAuthenticationInfo
+  });
+  this.name = 'InvalidAuthenticationInfo';
+};
+util.inherits(errors.InvalidAuthenticationInfo, restify.RestError);
+
 // InvalidInput	Bad Request (400)	One of the request inputs is not valid.
 // InvalidMetadata	Bad Request (400)	The specified metadata is invalid. It includes characters that are not permitted.
 // InvalidResourceName	Bad Request (400)	The specifed resource name contains invalid characters.
 // MetadataTooLarge	Bad Request (400)	The size of the specified metadata exceeds the maximum size permitted.
 
-errors.ConditionHeadersNotSupportedError = function (message) {
+
+errors.ConditionHeadersNotSupported = function ConditionHeadersNotSupported(message) {
   restify.RestError.call(this, {
     restCode: 'ConditionHeadersNotSupported',
     statusCode: 400,
@@ -219,11 +232,11 @@ errors.ConditionHeadersNotSupportedError = function (message) {
     description: "Condition headers are not supported.",
     constructorOpt: ConditionHeadersNotSupported
   });
-  this.name = 'ConditionHeadersNotSupportedError';
+  this.name = 'ConditionHeadersNotSupported';
 };
-util.inherits(errors.ConditionHeadersNotSupportedError, restify.RestError);
+util.inherits(errors.ConditionHeadersNotSupported, restify.RestError);
 
-errors.MultipleConditionHeadersNotSupportedError = function (message) {
+errors.MultipleConditionHeadersNotSupported = function MultipleConditionHeadersNotSupported(message) {
   restify.RestError.call(this, {
     restCode: 'MultipleConditionHeadersNotSupported',
     statusCode: 400,
@@ -231,11 +244,11 @@ errors.MultipleConditionHeadersNotSupportedError = function (message) {
     description: "Multiple condition headers are not supported.",
     constructorOpt: MultipleConditionHeadersNotSupported
   });
-  this.name = 'MultipleConditionHeadersNotSupportedError';
+  this.name = 'MultipleConditionHeadersNotSupported';
 };
-util.inherits(errors.MultipleConditionHeadersNotSupportedError, restify.RestError);
+util.inherits(errors.MultipleConditionHeadersNotSupported, restify.RestError);
 
-errors.AuthenticationFailedError = function (message) {
+errors.AuthenticationFailed = function AuthenticationFailed(message) {
   restify.RestError.call(this, {
     restCode: 'AuthenticationFailed',
     statusCode: 403,
@@ -243,11 +256,11 @@ errors.AuthenticationFailedError = function (message) {
     description: "Server failed to authenticate the request. Make sure the value of the Authorization header is formed correctly including the signature.",
     constructorOpt: AuthenticationFailed
   });
-  this.name = 'AuthenticationFailedError';
+  this.name = 'AuthenticationFailed';
 };
-util.inherits(errors.AuthenticationFailedError, restify.RestError);
+util.inherits(errors.AuthenticationFailed, restify.RestError);
 
-errors.ResourceNotFoundError = function (message) {
+errors.ResourceNotFound = function ResourceNotFound(message) {
   restify.RestError.call(this, {
     restCode: 'ResourceNotFound',
     statusCode: 404,
@@ -255,11 +268,11 @@ errors.ResourceNotFoundError = function (message) {
     description: "The specified resource does not exist.",
     constructorOpt: ResourceNotFound
   });
-  this.name = 'ResourceNotFoundError';
+  this.name = 'ResourceNotFound';
 };
-util.inherits(errors.ResourceNotFoundError, restify.RestError);
+util.inherits(errors.ResourceNotFound, restify.RestError);
 
-errors.AccountIsDisabledError = function (message) {
+errors.AccountIsDisabled = function AccountIsDisabled(message) {
   restify.RestError.call(this, {
     restCode: 'AccountIsDisabled',
     statusCode: 403,
@@ -267,11 +280,11 @@ errors.AccountIsDisabledError = function (message) {
     description: "The specified account is disabled.",
     constructorOpt: AccountIsDisabled
   });
-  this.name = 'AccountIsDisabledError';
+  this.name = 'AccountIsDisabled';
 };
-util.inherits(errors.AccountIsDisabledError, restify.RestError);
+util.inherits(errors.AccountIsDisabled, restify.RestError);
 
-errors.InsufficientAccountPermissionsError = function (message) {
+errors.InsufficientAccountPermissions = function InsufficientAccountPermissions(message) {
   restify.RestError.call(this, {
     restCode: 'InsufficientAccountPermissions',
     statusCode: 403,
@@ -279,11 +292,11 @@ errors.InsufficientAccountPermissionsError = function (message) {
     description: "The account being accessed does not have sufficient permissions to execute this operation.",
     constructorOpt: InsufficientAccountPermissions
   });
-  this.name = 'InsufficientAccountPermissionsError';
+  this.name = 'InsufficientAccountPermissions';
 };
-util.inherits(errors.InsufficientAccountPermissionsError, restify.RestError);
+util.inherits(errors.InsufficientAccountPermissions, restify.RestError);
 
-errors.InsufficientAccountPermissionsError = function (message) {
+errors.InsufficientAccountPermissions = function InsufficientAccountPermissions(message) {
   restify.RestError.call(this, {
     restCode: 'InsufficientAccountPermissions',
     statusCode: 405,
@@ -291,11 +304,11 @@ errors.InsufficientAccountPermissionsError = function (message) {
     description: "The account being accessed does not have sufficient permissions to execute this operation.",
     constructorOpt: InsufficientAccountPermissions
   });
-  this.name = 'InsufficientAccountPermissionsError';
+  this.name = 'InsufficientAccountPermissions';
 };
-util.inherits(errors.AccountIsDisabledError, restify.RestError);
+util.inherits(errors.AccountIsDisabled, restify.RestError);
 
-errors.UnsupportedHttpVerbError = function (message) {
+errors.UnsupportedHttpVerb = function UnsupportedHttpVerb(message) {
   restify.RestError.call(this, {
     restCode: 'UnsupportedHttpVerb',
     statusCode: 405,
@@ -303,11 +316,11 @@ errors.UnsupportedHttpVerbError = function (message) {
     description: "The resource doesn't support the specified HTTP verb.",
     constructorOpt: UnsupportedHttpVerb
   });
-  this.name = 'UnsupportedHttpVerbError';
+  this.name = 'UnsupportedHttpVerb';
 };
-util.inherits(errors.UnsupportedHttpVerbError, restify.RestError);
+util.inherits(errors.UnsupportedHttpVerb, restify.RestError);
 
-errors.AccountAlreadyExistsError = function (message) {
+errors.AccountAlreadyExists = function AccountAlreadyExists (message) {
   restify.RestError.call(this, {
     restCode: 'AccountAlreadyExists',
     statusCode: 409,
@@ -315,11 +328,11 @@ errors.AccountAlreadyExistsError = function (message) {
     description: "The specified account already exists.",
     constructorOpt: AccountAlreadyExists
   });
-  this.name = 'AccountAlreadyExistsError';
+  this.name = 'AccountAlreadyExists';
 };
-util.inherits(errors.AccountAlreadyExistsError, restify.RestError);
+util.inherits(errors.AccountAlreadyExists, restify.RestError);
 
-errors.AccountBeingCreatedError = function (message) {
+errors.AccountBeingCreated = function AccountBeingCreated(message) {
   restify.RestError.call(this, {
     restCode: 'AccountBeingCreated',
     statusCode: 409,
@@ -327,11 +340,11 @@ errors.AccountBeingCreatedError = function (message) {
     description: "The specified account is in the process of being created.",
     constructorOpt: AccountBeingCreated
   });
-  this.name = 'AccountBeingCreatedError';
+  this.name = 'AccountBeingCreated';
 };
-util.inherits(errors.AccountBeingCreatedError, restify.RestError);
+util.inherits(errors.AccountBeingCreated, restify.RestError);
 
-errors.ResourceAlreadyExistsError = function (message) {
+errors.ResourceAlreadyExists = function ResourceAlreadyExists(message) {
   restify.RestError.call(this, {
     restCode: 'ResourceAlreadyExists',
     statusCode: 409,
@@ -339,11 +352,11 @@ errors.ResourceAlreadyExistsError = function (message) {
     description: "The specified resource already exists.",
     constructorOpt: ResourceAlreadyExists
   });
-  this.name = 'ResourceAlreadyExistsError';
+  this.name = 'ResourceAlreadyExists';
 };
-util.inherits(errors.ResourceAlreadyExistsError, restify.RestError);
+util.inherits(errors.ResourceAlreadyExists, restify.RestError);
 
-errors.ResourceTypeMismatchError = function (message) {
+errors.ResourceTypeMismatch = function ResourceTypeMismatch(message) {
   restify.RestError.call(this, {
     restCode: 'ResourceTypeMismatch',
     statusCode: 409,
@@ -351,11 +364,11 @@ errors.ResourceTypeMismatchError = function (message) {
     description: "The specified resource type does not match the type of the existing resource.",
     constructorOpt: ResourceTypeMismatch
   });
-  this.name = 'ResourceTypeMismatchError';
+  this.name = 'ResourceTypeMismatch';
 };
-util.inherits(errors.ResourceTypeMismatchError, restify.RestError);
+util.inherits(errors.ResourceTypeMismatch, restify.RestError);
 
-errors.MissingContentLengthHeaderError = function (message) {
+errors.MissingContentLengthHeader = function MissingContentLengthHeader(message) {
   restify.RestError.call(this, {
     restCode: 'MissingContentLengthHeader',
     statusCode: 411,
@@ -363,11 +376,11 @@ errors.MissingContentLengthHeaderError = function (message) {
     description: "The Content-Length header was not specified.",
     constructorOpt: MissingContentLengthHeader
   });
-  this.name = 'MissingContentLengthHeaderError';
+  this.name = 'MissingContentLengthHeader';
 };
-util.inherits(errors.MissingContentLengthHeaderError, restify.RestError);
+util.inherits(errors.MissingContentLengthHeader, restify.RestError);
 
-errors.ConditionNotMetError = function (message) {
+errors.ConditionNotMet = function ConditionNotMet(message) {
   restify.RestError.call(this, {
     restCode: 'ConditionNotMet',
     statusCode: 412,
@@ -375,11 +388,11 @@ errors.ConditionNotMetError = function (message) {
     description: "The condition specified in the conditional header(s) was not met for a write operation.",
     constructorOpt: ConditionNotMet
   });
-  this.name = 'ConditionNotMetError';
+  this.name = 'ConditionNotMet';
 };
-util.inherits(errors.ConditionNotMetError, restify.RestError);
+util.inherits(errors.ConditionNotMet, restify.RestError);
 
-errors.RequestBodyTooLargeError = function (message) {
+errors.RequestBodyTooLarge = function RequestBodyTooLarge(message) {
   restify.RestError.call(this, {
     restCode: 'RequestBodyTooLarge',
     statusCode: 413,
@@ -387,11 +400,11 @@ errors.RequestBodyTooLargeError = function (message) {
     description: "The size of the request body exceeds the maximum size permitted.",
     constructorOpt: RequestBodyTooLarge
   });
-  this.name = 'RequestBodyTooLargeError';
+  this.name = 'RequestBodyTooLarge';
 };
-util.inherits(errors.RequestBodyTooLargeError, restify.RestError);
+util.inherits(errors.RequestBodyTooLarge, restify.RestError);
 
-errors.InvalidRangeError = function (message) {
+errors.InvalidRange = function InvalidRange(message) {
   restify.RestError.call(this, {
     restCode: 'InvalidRange',
     statusCode: 416,
@@ -399,11 +412,11 @@ errors.InvalidRangeError = function (message) {
     description: "The range specified is invalid for the current size of the resource.",
     constructorOpt: InvalidRange
   });
-  this.name = 'InvalidRangeError';
+  this.name = 'InvalidRange';
 };
-util.inherits(errors.InvalidRangeError, restify.RestError);
+util.inherits(errors.InvalidRange, restify.RestError);
 
-errors.InternalErrorError = function (message) {
+errors.InternalError = function InternalError(message) {
   restify.RestError.call(this, {
     restCode: 'InternalError',
     statusCode: 500,
@@ -411,11 +424,11 @@ errors.InternalErrorError = function (message) {
     description: "The server encountered an internal error. Please retry the request.",
     constructorOpt: InternalError
   });
-  this.name = 'InternalErrorError';
+  this.name = 'InternalError';
 };
-util.inherits(errors.InternalErrorError, restify.RestError);
+util.inherits(errors.InternalError, restify.RestError);
 
-errors.OperationTimedOutError = function (message) {
+errors.OperationTimedOut = function OperationTimedOut(message) {
   restify.RestError.call(this, {
     restCode: 'OperationTimedOut',
     statusCode: 500,
@@ -423,11 +436,11 @@ errors.OperationTimedOutError = function (message) {
     description: "The operation could not be completed within the permitted time.",
     constructorOpt: OperationTimedOut
   });
-  this.name = 'OperationTimedOutError';
+  this.name = 'OperationTimedOut';
 };
-util.inherits(errors.OperationTimedOutError, restify.RestError);
+util.inherits(errors.OperationTimedOut, restify.RestError);
 
-errors.ServerBusyError = function (message) {
+errors.ServerBusy = function ServerBusy(message) {
   restify.RestError.call(this, {
     restCode: 'ServerBusy',
     statusCode: 500,
@@ -435,10 +448,25 @@ errors.ServerBusyError = function (message) {
     description: "The server is currently unable to receive requests. Please retry your request.",
     constructorOpt: ServerBusy
   });
-  this.name = 'ServerBusyError';
+  this.name = 'ServerBusy';
 };
-util.inherits(errors.ServerBusyError, restify.RestError);
+util.inherits(errors.ServerBusy, restify.RestError);
+
+/* custom error message for get handler */
+errors.CustomError = function CustomError(code, message, body) {
+  restify.RestError.call(this, {
+    restCode: code,
+    statusCode: code,
+    constructorOpt: CustomError,
+    message: message,
+    body: body
+  });
+
+  this.name = 'CustomError';
+};
+
+util.inherits(errors.CustomError, restify.RestError);
 
 // Make them available outside the module
 module.exports.errors = errors;
-//module.exports.formatter = formatter;
+module.exports.formatter = formatter;
