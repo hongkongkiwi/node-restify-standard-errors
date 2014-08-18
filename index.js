@@ -332,6 +332,18 @@ errors.AccountAlreadyExists = function AccountAlreadyExists (message) {
 };
 util.inherits(errors.AccountAlreadyExists, restify.RestError);
 
+errors.AccountDoesNotExists = function AccountDoesNotExists (message) {
+  restify.RestError.call(this, {
+    restCode: 'AccountDoesNotExists',
+    statusCode: 409,
+    message: message,
+    description: "The specified account does not exists.",
+    constructorOpt: AccountDoesNotExists
+  });
+  this.name = 'AccountDoesNotExists';
+};
+util.inherits(errors.AccountDoesNotExists, restify.RestError);
+
 errors.AccountBeingCreated = function AccountBeingCreated(message) {
   restify.RestError.call(this, {
     restCode: 'AccountBeingCreated',

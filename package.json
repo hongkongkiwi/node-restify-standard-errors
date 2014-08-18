@@ -1,6 +1,6 @@
 {
   "name": "restify-standard-errors",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A set of errors copied from Microsoft standard API error documentation.",
   "main": "index.js",
   "scripts": {
