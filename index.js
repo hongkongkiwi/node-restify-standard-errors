@@ -260,6 +260,18 @@ errors.AuthenticationFailed = function AuthenticationFailed(message) {
 };
 util.inherits(errors.AuthenticationFailed, restify.RestError);
 
+errors.AuthenticationFailedDuplicateLogin = function AuthenticationFailedDuplicateLogin(message) {
+  restify.RestError.call(this, {
+    restCode: 'AuthenticationFailedDuplicateLogin',
+    statusCode: 403,
+    message: message,
+    description: "Server failed to authenticate the request because another account is already authorized. Make sure all other accounts are deauthorized and try again.",
+    constructorOpt: Error_AuthenticationFailedDuplicateLogin
+  });
+  this.name = 'AuthenticationFailedDuplicateLogin';
+};
+util.inherits(errors.AuthenticationFailedDuplicateLogin, restify.RestError);
+
 errors.ResourceNotFound = function ResourceNotFound(message) {
   restify.RestError.call(this, {
     restCode: 'ResourceNotFound',
